@@ -1,0 +1,326 @@
+﻿@model COMSCA.Models.tbl_loanSchedule
+
+@{
+    ViewData["Title"] = "Loan Approval";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" style="padding-top: 60px;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Loan Approval</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Loans</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-edit pr-2"></i>List of Loan for Approval</h3>
+                </div>
+
+                @Html.HiddenFor(x => x.LoanScheduleID)
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="dataTables_wrapper table-responsive dt-bootstrap4">
+                                <table id="tbl_Loans" class="table table-bordered table-hover text-center" style="width:100%"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+
+                </div>
+            </div>
+
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fa fa-money pr-2"></i>Collection Details</h3>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-3">
+                            <div for="TotalCollection" class="text-primary">Total Collection</div>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text text-primary">₱</span>
+                                </div>
+                                <input type="text" class="form-control text-right text-primary" name="CurrentCollection" placeholder="0.00" readonly="readonly" value="@ViewBag.CurrentCollection">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div for="AccountReceivable" class="text-warning">Account Receivable</div>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text text-warning">₱</span>
+                                </div>
+                                <input type="text" class="form-control text-right text-warning" name="TotalLoans" placeholder="0.00" readonly="readonly" value="@ViewBag.TotalLoans">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+
+                </div>
+            </div>
+
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-edit pr-2"></i>List of Approved Loans</h3>
+                </div>
+
+                <input type="hidden" name="ApprovedLoanID">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="dataTables_wrapper table-responsive dt-bootstrap4">
+                                <table id="tbl_ApprovedLoans" class="table table-bordered table-hover text-center" style="width:100%"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+
+                </div>
+            </div>
+
+        </div><!--/. container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+@section Scripts
+{
+    <script>
+
+        $(document).ready(function () {
+
+            LoadAppliedLoans();
+            function LoadAppliedLoans() {
+                $('#tbl_Loans').DataTable({
+                    destroy: true,
+                    responsive: true,
+                    processing: false,
+                    search: true,
+                    stateSave: true,
+                    info: true,
+                    searching: true,
+                    paging: true,
+                    order: [[1, "asc"], [2, "asc"]],
+                    lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]],
+                    ajax: {
+                        "url": "../Loans/LoadAppliedLoans",
+                        "type": "POST",
+                        "datatype": "JSON"
+                    },
+                    columns:
+                        [
+                            { data: "MemberID", visible: false, "orderable": false },
+                            { data: "FullName", title: "Full Name", sClass: "dt-body-center", orderable: false },
+                            { data: "Amount", title: "Amount", sClass: "dt-body-right", orderable: false, render: $.fn.dataTable.render.number(',', '.', 2, '₱ ') },
+                            { data: "DateSchedule", title: "Date Scheduled", sClass: "dt-body-center", orderable: false },
+                            {
+                                data: "IsApproved", title: "Status", sClass: "dt-body-center", render: function (data) {
+                                    if (data == false) {
+                                        return "<span class='badge bg-danger'>For Approval</span>"
+                                    }
+                                }
+                            },
+                            {
+                                data: "LoanScheduleID", title: "Action", render: function (data) {
+                                    return "<div class='row justify-content-center'>" +
+                                        "<div class='dropdown dropleft'>" +
+                                        "<button id='btnbars' type='button' class='btn btn-sm btn-success btnbars' data-toggle='dropdown'>" +
+                                        "<i class='fa fa-bars'></i>" +
+                                        "</button> <div class='dropdown-menu'>" +
+                                        "<div class='container fluid'> " +
+                                        "<a id='btnApproved' class='btn btn-warning btn-sm fa fa-edit col-sm-12' style='margin-bottom: 3px; margin-top: 3px;'>" +
+                                        "&nbspApproved</a>" +
+                                        "<br />" +
+                                        "<a id='btnDisapproved' class='btn btn-danger btn-sm fa fa-edit col-sm-12' style='margin-bottom: 3px; margin-top: 3px; color: white;'>" +
+                                        "&nbspDisapproved</a>" +
+                                        "</div></div></div ></div>";
+                                }
+                            }
+                        ]
+                });
+
+                $('#tbl_Loans tbody').off().on('click', 'tr', function (e) {
+                    if ($(e.target).is("[id^=btnApproved],[id^=btnApproved] i")) {
+                        ApprovedDisApproved(true);
+                    }
+                    else if ($(e.target).is("[id^=btnDisapproved],[id^=btnDisapproved] i")) {
+                        ApprovedDisApproved(false);
+                    }
+                    else if (!$(e.target).is("[id^=btnbars],[id^=btnbars] i")) {
+                        if (!$(this).hasClass("dtactive")) {
+                            $(this).parent().find("tr").removeClass("dtactive");
+                            $(this).addClass("dtactive");
+                            $("[name='LoanScheduleID']").val(SelectedValue("tbl_Loans", "LoanScheduleID"));
+                        } else {
+                            $(this).removeClass("dtactive");
+                            $("[name='LoanScheduleID']").val(0);
+                        }
+                    }
+                });
+            }
+
+            function ApprovedDisApproved(isTrue) {
+                if ($("[name='LoanScheduleID']").val() != 0) {
+                    $.ajax({
+                        url: "../Loans/ApprovedDisApproved?LoanScheduleID= " + $("[name='LoanScheduleID']").val() + "&isTrue=" + isTrue,
+                        type: "POST",
+                        success: function (res) {
+                            if (res.success) {
+                                if (res.success) {
+                                    if (isTrue) {
+                                        LoadApprovedLoans();
+                                    }
+                                    LoadAppliedLoans();
+                                }
+                            }
+                            $("[name='LoanScheduleID']").val(0);
+                        }
+                    });
+                }
+                else {
+                    Swal.fire('Information!', 'Please select a record first.', 'info');
+                }
+            }
+
+            LoadApprovedLoans();
+            function LoadApprovedLoans() {
+                $('#tbl_ApprovedLoans').DataTable({
+                    destroy: true,
+                    responsive: true,
+                    processing: false,
+                    search: true,
+                    stateSave: true,
+                    info: true,
+                    searching: true,
+                    paging: true,
+                    order: [[1, "asc"], [2, "asc"]],
+                    lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]],
+                    ajax: {
+                        "url": "../Loans/LoadApprovedLoans",
+                        "type": "POST",
+                        "datatype": "JSON"
+                    },
+                    columns:
+                        [
+                            { data: "MemberID", visible: false, "orderable": false },
+                            { data: "FullName", title: "Full Name", sClass: "dt-body-center", orderable: false },
+                            { data: "Amount", title: "Amount", sClass: "dt-body-right", orderable: false, render: $.fn.dataTable.render.number(',', '.', 2, '₱ ') },
+                            { data: "DateReleased", title: "Date Released", sClass: "dt-body-center", orderable: false },
+                            {
+                                data: "IsReleased", title: "Status", sClass: "dt-body-center", render: function (data) {
+                                    if (data == true) {
+                                        return "<span class='badge bg-primary'>Released</span>"
+                                    }
+                                    else {
+                                        return "<span class='badge bg-warning'>For Releasing</span>"
+                                    }
+                                }
+                            },
+                            {
+                                data: "ApprovedLoanID", title: "Action", render: function (data) {
+                                    return "<div class='row justify-content-center'>" +
+                                        "<div class='dropdown dropleft'>" +
+                                        "<button id='btnbars' type='button' class='btn btn-sm btn-success btnbars' data-toggle='dropdown'>" +
+                                        "<i class='fa fa-bars'></i>" +
+                                        "</button> <div class='dropdown-menu'>" +
+                                        "<div class='container fluid'> " +
+                                        "<a id='btnReleased' class='btn btn-warning btn-sm fa fa-edit col-sm-12' style='margin-bottom: 3px; margin-top: 3px;'>" +
+                                        "&nbspRelease Loan</a>" +
+                                        "<br />" +
+                                        "<a id='btnForApproval' class='btn btn-danger btn-sm fa fa-edit col-sm-12' style='margin-bottom: 3px; margin-top: 3px; color: white;'>" +
+                                        "&nbspFor Approval</a>" +
+                                        "</div></div></div ></div>";
+                                }
+                            }
+                        ]
+                });
+
+                $('#tbl_ApprovedLoans tbody').off().on('click', 'tr', function (e) {
+                    if ($(e.target).is("[id^=btnReleased],[id^=btnReleased] i")) {
+                        ReleasedLoan(true);
+                    }
+                    else if ($(e.target).is("[id^=btnForApproval],[id^=btnForApproval] i")) {
+                        ReleasedLoan(false);
+                    }
+                    else if (!$(e.target).is("[id^=btnbars],[id^=btnbars] i")) {
+                        if (!$(this).hasClass("dtactive")) {
+                            $(this).parent().find("tr").removeClass("dtactive");
+                            $(this).addClass("dtactive");
+                            $("[name='ApprovedLoanID']").val(SelectedValue("tbl_ApprovedLoans", "ApprovedLoanID"));
+                        } else {
+                            $(this).removeClass("dtactive");
+                            $("[name='ApprovedLoanID']").val(0);
+                        }
+                    }
+                });
+            }
+
+            function ReleasedLoan(isTrue) {
+                if ($("[name='ApprovedLoanID']").val() != 0) {
+                    $.ajax({
+                        url: "../Loans/ReleasedLoan?LoanScheduleID= " + $("[name='ApprovedLoanID']").val() + "&isTrue=" + isTrue,
+                        type: "POST",
+                        success: function (res) {
+                            if (res.success) {
+                                if (!isTrue) {
+                                    LoadAppliedLoans();
+                                }
+                            }
+                            else {
+                                Swal.fire('Information!', res.message, 'info');
+                            }
+                            LoadApprovedLoans();
+                            $("[name='ApprovedLoanID']").val(0);
+                            GetCollection();
+                        }
+                    });
+                }
+                else {
+                    Swal.fire('Information!', 'Please select a record first.', 'info');
+                }
+            }
+
+            function GetCollection() {
+                $.ajax({
+                    url: "../Loans/GetCollection",
+                    type: "POST",
+                    success: function (res) {
+                        if (res.data != null) {
+                            $("[name='CurrentCollection']").val(TextMoneyFormat(res.data.CurrentCollection));
+                            $("[name='TotalLoans']").val(TextMoneyFormat(res.data.TotalLoans));
+                        }
+                    }
+                });
+            }
+
+
+        });
+
+        ActiveMenu("#loans");
+    </script>
+}
+

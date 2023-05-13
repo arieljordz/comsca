@@ -1,0 +1,491 @@
+﻿@model COMSCA.Models.tbl_collection
+
+@{
+    ViewData["Title"] = "Contribution";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" style="padding-top: 60px;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Contribution</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Contribution</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-edit pr-2"></i>Weekly Contribution</h3>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="dataTables_wrapper table-responsive dt-bootstrap4">
+                                <table id="tbl_Payees" class="table table-bordered table-hover text-center" style="width:100%"></table>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="card card-secondary">
+                                <div class="card-header">
+                                    <h3 class="card-title"><i class="fas fa-edit pr-2"></i>Amounts Payable</h3>
+                                </div>
+                                @Html.HiddenFor(x => x.MemberID)
+                                @Html.HiddenFor(x => x.CollectionID)
+                                <input type="hidden" name="ContributionFee" value="@ViewBag.ContributionFee" />
+                                <input type="hidden" name="AbsentFee" value="@ViewBag.AbsentFee" />
+                                <input type="hidden" name="ServiceChargeFee" value="@ViewBag.ServiceChargeFee" />
+
+                                <form id="form_contribution" novalidate="novalidate">
+                                    <div class="card-body">
+
+                                        <div class="row">
+                                            <div class="col-6">
+
+                                                <div class="card card-primary card-outline">
+                                                    <a class="d-block w-100" data-toggle="collapse" href="#WeeklyContribution">
+                                                        <div class="card-header">
+                                                            <h4 class="card-title w-100">
+                                                                Weekly Contribution
+                                                            </h4>
+                                                        </div>
+                                                    </a>
+                                                    <div id="WeeklyContribution" class="collapse show" data-parent="#accordion">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div for="NoofWeeks">No. of Weeks</div>
+                                                                    <div class="form-group">
+                                                                        <select class="form-control" id="NoofWeeks" name="NoofWeeks" aria-invalid="false">
+                                                                            <option value="1">1 week</option>
+                                                                            <option value="2">2 weeks</option>
+                                                                            <option value="3">3 weeks</option>
+                                                                            <option value="4">4 weeks</option>
+                                                                            <option value="5">5 weeks</option>
+                                                                            <option value="6">6 weeks</option>
+                                                                            <option value="7">7 weeks</option>
+                                                                            <option value="8">8 weeks</option>
+                                                                            <option value="9">9 weeks</option>
+                                                                            <option value="10">10 weeks</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div for="NoofWeeksAbsent">No. of Weeks Absent</div>
+                                                                    <div class="form-group">
+                                                                        <select class="form-control" id="NoofWeeksAbsent" name="NoofWeeksAbsent" aria-invalid="false">
+                                                                            <option value="0"></option>
+                                                                            <option value="1">1 week</option>
+                                                                            <option value="2">2 weeks</option>
+                                                                            <option value="3">3 weeks</option>
+                                                                            <option value="4">4 weeks</option>
+                                                                            <option value="5">5 weeks</option>
+                                                                            <option value="6">6 weeks</option>
+                                                                            <option value="7">7 weeks</option>
+                                                                            <option value="8">8 weeks</option>
+                                                                            <option value="9">9 weeks</option>
+                                                                            <option value="10">10 weeks</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div for="TotalAmountPaid">Total Amount Payable</div>
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">₱</span>
+                                                                        </div>
+                                                                        <input type="text" name="TotalAmountPaid" class="form-control" id="TotalAmountPaid" placeholder="0" readonly="readonly">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-6">
+
+                                                <div class="card card-primary card-outline">
+                                                    <a class="d-block w-100" data-toggle="collapse" href="#ServiceCharge">
+                                                        <div class="card-header">
+                                                            <h4 class="card-title w-100">
+                                                                Loan Service Charge
+                                                            </h4>
+                                                        </div>
+                                                    </a>
+                                                    <div id="ServiceCharge" class="collapse show" data-parent="#accordion">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-12 pb-3">
+                                                                    <div for="CurrentLoan">Current Loan</div>
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">₱</span>
+                                                                        </div>
+                                                                        <input type="text" name="CurrentLoan" class="form-control" id="CurrentLoan" placeholder="0" readonly="readonly">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-12 pb-3">
+                                                                    <div for="ServiceChargeInterest">Service Charge Interest</div>
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">₱</span>
+                                                                        </div>
+                                                                        <input type="text" name="ServiceChargeInterest" class="form-control" id="ServiceChargeInterest" value="@ViewBag.ServiceChargeFee" readonly="readonly">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div for="ServiceCharge">Service Charge</div>
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">₱</span>
+                                                                        </div>
+                                                                        <input type="text" name="ServiceCharge" class="form-control" id="ServiceCharge" placeholder="0" readonly="readonly">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="card card-primary card-outline">
+                                            <a class="d-block w-100" data-toggle="collapse" href="#AmountRendered">
+                                                <div class="card-header">
+                                                    <h4 class="card-title w-100">
+                                                        Amount Rendered and Change
+                                                    </h4>
+                                                </div>
+                                            </a>
+                                            <div id="AmountRendered" class="collapse show" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-6 pb-3">
+                                                            <div for="AmountPaid">Amount Rendered</div>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">₱</span>
+                                                                </div>
+                                                                <input type="text" min="1" max="9999999" name="AmountPaid" class="form-control" id="AmountPaid">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div for="Change">Change</div>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">₱</span>
+                                                                </div>
+                                                                <input type="text" name="Change" class="form-control" id="Change" placeholder="0" readonly="readonly">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-success float-right" id="btn_save_contribution"><i class="fas fa-save pr-2"></i>Collect</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+
+                </div>
+            </div>
+        </div><!--/. container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+@section Scripts
+{
+    <script>
+
+        $(document).ready(function () {
+            var member_id = 0;
+
+            LoadMembers();
+            function LoadMembers() {
+                $('#tbl_Payees').DataTable({
+                    destroy: true,
+                    responsive: true,
+                    processing: false,
+                    search: true,
+                    stateSave: true,
+                    info: true,
+                    searching: true,
+                    paging: true,
+                    //order: [[1, "asc"], [2, "asc"]],
+                    //lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]],
+                    ajax: {
+                        "url": "../Membership/LoadMembers",
+                        "type": "POST",
+                        "datatype": "JSON"
+                        //"success": function (data) {
+                        //    alert(JSON.stringify(data.data));
+                        //}
+                    },
+                    columns:
+                        [
+                            { data: "MemberID", visible: false, "orderable": false },
+                            { data: "FullName", title: "Payee's Full Name", sClass: "dt-body-center", orderable: false },
+                        ]
+                });
+
+                $('#tbl_Payees tbody').off().on('click', 'tr', function (e) {
+                    e.preventDefault();
+                    if (!$(this).hasClass("dtactive")) {
+                        $(this).parent().find("tr").removeClass("dtactive");
+                        $(this).addClass("dtactive");
+                        member_id = SelectedValue("tbl_Payees", "MemberID");
+                        //alert(member_id);
+                        $("[name='MemberID']").val(member_id);
+                        GetCurrentLoan();
+                    } else {
+                        $(this).removeClass("dtactive");
+                        $("[name='MemberID']").val(0);
+                        $("[name='CurrentLoan']").val("");
+                        $("[name='ServiceCharge']").val("");
+                        $('#TotalAmountPaid').val($("[name='ContributionFee']").val());
+                        $('#AmountPaid').val($("[name='ContributionFee']").val());
+                    }
+                    $('#NoofWeeksAbsent').val(0);
+                });
+            }
+
+            function GetCurrentLoan() {
+                if ($("[name='MemberID']").val() != 0) {
+                    $.ajax({
+                        url: "../Collection/GetCurrentLoan?MemberID= " + $("[name='MemberID']").val(),
+                        type: "GET",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (res) {
+                            if (res.data != null) {
+                                $("[name='CurrentLoan']").val(res.data.CurrentLoan);
+                                $("[name='ServiceCharge']").val(res.data.ServiceCharge);
+                                $('#TotalAmountPaid').val(parseFloat($("[name='ContributionFee']").val()) + parseFloat(res.data.ServiceCharge));
+                                $('#AmountPaid').val(parseFloat($("[name='ContributionFee']").val()) + parseFloat(res.data.ServiceCharge));
+                            }
+                        }
+                    });
+                }
+                else {
+                    Swal.fire('Information!', 'Please select a record first.', 'info');
+                }
+            }
+
+            ValidateContirbution();
+            function ValidateContirbution() {
+                $.validator.setDefaults({
+                    submitHandler: function () {
+                        var change = $("[name='Change']").val();
+                        //alert(TotalAmountPaid - parseFloat(change));
+                        //alert(member_id);
+                        if (member_id != 0) {
+                            console.log(change);
+                            console.log(TotalAmountPaid);
+                            if (change <= TotalAmountPaid) {
+                                if (change >= 0) {
+                                    SaveContribution();
+                                } else {
+                                    Swal.fire("Warning!", "The Amount Paid must be greater than or equal to Total Amount Payable.", "warning");
+                                }
+                            }
+                            else {
+                                Swal.fire("Warning!", "The amount due must be greater than amount payable.", "warning");
+                            }
+                        } else {
+                            Swal.fire("Warning!", "There is no selected member.", "warning");
+                        }
+                    }
+                });
+                $('#form_contribution').validate({
+                    rules: {
+                        NoofWeeks: {
+                            required: true
+                        },
+                        AmountPaid: {
+                            required: true
+                        },
+                    },
+                    messages: {
+                        NoofWeeks: {
+                            required: "This field is required"
+                        },
+                        AmountPaid: {
+                            required: "This field is required"
+                        },
+                    },
+                    errorElement: 'span',
+                    errorPlacement: function (error, element) {
+                        error.addClass('invalid-feedback');
+                        element.closest('.form-group').append(error);
+                    },
+                    highlight: function (element, errorClass, validClass) {
+                        $(element).addClass('is-invalid');
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $(element).removeClass('is-invalid');
+                    }
+                });
+            }
+
+            function SaveContribution() {
+                $.ajax({
+                    url: "../Collection/SaveContribution",
+                    type: 'POST',
+                    data: ContributionDetails(),
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (res) {
+                        if (res.success == true) {
+                            Swal.fire({
+                                text: "Successfully saved.",
+                                icon: "success",
+                                showCancelButton: false,
+                                confirmButtonColor: '#28a745',
+                                confirmButtonText: "Ok"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $("#form_contribution").trigger("reset");
+                                    $("[name='MemberID']").val(0);
+                                    LoadMembers();
+                                }
+                            });
+                        } else {
+                            Swal.fire("Error!", res.message, "error");
+                        }
+                    }
+                });
+            }
+
+            function ContributionDetails() {
+                var formData = new FormData();
+                formData.append('MemberID', $("[name='MemberID']").val());
+                formData.append('NoofWeeks', $("[name='NoofWeeks']").val());
+                formData.append('AmountPaid', $("[name='AmountPaid']").val());
+                formData.append('NoofWeeksAbsent', $("[name='NoofWeeksAbsent']").val());
+                return formData;
+            }
+
+            var TotalAmountPaid = 0;
+            var ContributionFee = $("[name='ContributionFee']").val();
+            var AbsentFee = $("[name='AbsentFee']").val();
+            var ServiceChargeFee = $("[name='ServiceCharge']").val();
+
+            console.log($("[name='ContributionFee']").val());
+            console.log($("[name='AbsentFee']").val());
+            console.log($("[name='ServiceChargeFee']").val());
+
+            $('#TotalAmountPaid').val($("[name='ContributionFee']").val());
+            $('#AmountPaid').val($("[name='ContributionFee']").val());
+
+            $('#NoofWeeks').change(function () {
+                var NoofWeeks = parseFloat($('#NoofWeeks').val()) || 0;
+                var ContributionFee = parseFloat($("[name='ContributionFee']").val()) || 0;
+                var ServiceChargeFee = parseFloat($("[name='ServiceCharge']").val()) || 0;
+                if (NoofWeeks != 0) {
+                    if (NoofWeeks < $('#NoofWeeksAbsent').val()) {
+                        Swal.fire("Warning!", "The No. of Weeks must be greater than or equal to No. of Weeks Absent.", "warning");
+                        $('#NoofWeeks').val($('#NoofWeeksAbsent').val());
+                        NoofWeeks = $('#NoofWeeks').val();
+                    }
+
+                    ServiceChargeFee = (ServiceChargeFee * NoofWeeks);
+                    ContributionFee = (ContributionFee * NoofWeeks);
+
+                    if ($('#NoofWeeksAbsent').val() == 0) {
+                        TotalAmountPaid = parseFloat(ContributionFee) + parseFloat(ServiceChargeFee);
+                    } else {
+                        TotalAmountPaid = parseFloat(ContributionFee) + parseFloat(AbsentFee * $('#NoofWeeksAbsent').val()) + parseFloat(ServiceChargeFee);
+                    }
+
+                    $('#TotalAmountPaid').val(TotalAmountPaid);
+                    $('#AmountPaid').val(TotalAmountPaid);
+                    $('#Change').val((TotalAmountPaid - TotalAmountPaid));
+                }
+            });
+
+            $('#NoofWeeksAbsent').change(function () {
+                var NoofWeeks = parseFloat($('#NoofWeeks').val()) || 0;
+                var NoofWeeksAbsent = parseFloat($('#NoofWeeksAbsent').val()) || 0;
+                var AbsentFee = parseFloat($("[name='AbsentFee']").val()) || 0;
+                var ServiceChargeFee = parseFloat($("[name='ServiceCharge']").val()) || 0;
+
+                var _ContributionFee = 0;
+                var _AbsentFee = 0;
+                var _ServiceChargeFee = 0;
+
+                if (NoofWeeksAbsent != 0) {
+                    if (NoofWeeksAbsent > $('#NoofWeeks').val()) {
+                        Swal.fire("Warning!", "The No. of Weeks Absent must be less than or equal to No. of Weeks.", "warning");
+                        $('#NoofWeeksAbsent').val($('#NoofWeeks').val());
+                        NoofWeeksAbsent = $('#NoofWeeksAbsent').val();
+                    }
+                    _ServiceChargeFee = (ServiceChargeFee * NoofWeeks);
+                    _AbsentFee = (AbsentFee * NoofWeeksAbsent);
+                    _ContributionFee = (ContributionFee * NoofWeeks);
+
+                    TotalAmountPaid = parseFloat(_ContributionFee) + parseFloat(_AbsentFee) + parseFloat(_ServiceChargeFee);
+                    $('#TotalAmountPaid').val(TotalAmountPaid);
+                    $('#AmountPaid').val(TotalAmountPaid);
+                    $('#Change').val((TotalAmountPaid - TotalAmountPaid));
+
+                } else {
+                    _ServiceChargeFee = (ServiceChargeFee * NoofWeeks);
+                    _ContributionFee = (ContributionFee * NoofWeeks);
+                    TotalAmountPaid = parseFloat(_ContributionFee) + parseFloat(_ServiceChargeFee);
+                    $('#TotalAmountPaid').val(TotalAmountPaid);
+                    $('#AmountPaid').val(TotalAmountPaid);
+                    $('#Change').val((TotalAmountPaid - TotalAmountPaid));
+                }
+            });
+
+            $('#AmountPaid').keyup(function () {
+                var AmountPaid = parseFloat($('#AmountPaid').val()) || 0;
+                if (AmountPaid != 0) {
+                    $('#Change').val((AmountPaid - TotalAmountPaid));
+                } else {
+                    $('#Change').val("");
+                }
+            });
+
+
+        });
+
+        ActiveMenu("#contribution");
+    </script>
+}
+

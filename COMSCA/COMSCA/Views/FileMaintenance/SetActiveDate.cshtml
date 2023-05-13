@@ -1,0 +1,250 @@
+﻿
+@{
+    ViewData["Title"] = "Active Date";
+}
+
+@Html.Partial("_AddActiveDate")
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" style="padding-top: 60px;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Active Date</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Set Active Date</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fa fa-calendar pr-2"></i>Set Active Date</h3>
+                </div>
+
+                <div class="card-body">
+                    <div class="row pl-2">
+                        <button type="button" class="btn btn-success" id="btn_set_date"><i class="fa fa-plus mr-2"></i>Add Start Date</button>
+                    </div>
+                    <div class="row pb-3 pt-3">
+                        <div class="col-md-12">
+                            <div class="dataTables_wrapper table-responsive dt-bootstrap4">
+                                <table id="tbl_ActiveDates" class="table table-bordered table-hover text-center" style="width:100%"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                </div>
+            </div>
+        </div><!--/. container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            var activeDate_id = 0;
+
+            LoadActiveDates();
+            function LoadActiveDates() {
+                $('#tbl_ActiveDates').DataTable({
+                    destroy: true,
+                    responsive: true,
+                    processing: false,
+                    search: true,
+                    stateSave: true,
+                    info: true,
+                    searching: true,
+                    paging: true,
+                    order: [[1, "asc"], [2, "asc"]],
+                    lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]],
+                    ajax: {
+                        "url": "../FileMaintenance/LoadActiveDates",
+                        "type": "POST",
+                        "datatype": "JSON"
+                        //"success": function (data) {
+                        //    alert(JSON.stringify(data.data));
+                        //}
+                    },
+                    columns:
+                        [
+                            //{ data: "ActiveDateID", visible: false, "orderable": false },
+                            { data: "WeekNumber", title: "Week Number", sClass: "dt-body-left", orderable: true },
+                            { data: "ActiveDate", title: "Due Date", sClass: "dt-body-center", orderable: false },
+                            //{ data: "IsActive", title: "Is Active", sClass: "dt-body-center", orderable: false },
+                            {
+                                data: "IsActive", title: "Is Active", sClass: "dt-body-center", render: function (data) {
+                                    if (data == true) {
+                                        return "<span class='badge bg-primary'>Active</span>"
+                                    } else {
+                                        return "<span class='badge bg-danger'>Inactive</span>"
+                                    }
+                                }
+                            },
+                            {
+                                data: "ActiveDateID", title: "Action", render: function (data) {
+                                    return "<div class='row justify-content-center'>" +
+                                        "<div class='dropdown dropleft'>" +
+                                        "<button id='btnbars' type='button' class='btn btn-sm btn-success btnbars' data-toggle='dropdown'>" +
+                                        "<i class='fa fa-bars'></i>" +
+                                        "</button> <div class='dropdown-menu'>" +
+                                        "<div class='container fluid'> " +
+                                        "<a id='btnUpdate' class='btn btn-warning btn-sm fa fa-edit col-sm-12' style='margin-bottom: 3px; margin-top: 3px;'>" +
+                                        "&nbspActivate</a>" +
+                                        "<br />" +
+                                        "<a id='btnDelete' class='btn btn-danger btn-sm fa fa-edit col-sm-12' style='margin-bottom: 3px; margin-top: 3px; color: white;'>" +
+                                        "&nbspDelete</a>" +
+                                        "</div></div></div ></div>";
+                                }
+                            }
+                        ]
+                });
+
+                $('#tbl_ActiveDates tbody').off().on('click', 'tr', function (e) {
+                    if ($(e.target).is("[id^=btnUpdate],[id^=btnUpdate] i")) {
+                        SetAsActive();
+                    }
+                    else if ($(e.target).is("[id^=btnDelete],[id^=btnDelete] i")) {
+                        RemoveActiveDate();
+                    }
+                    else if (!$(e.target).is("[id^=btnbars],[id^=btnbars] i")) {
+                        if (!$(this).hasClass("dtactive")) {
+                            $(this).parent().find("tr").removeClass("dtactive");
+                            $(this).addClass("dtactive");
+                            activeDate_id = SelectedValue("tbl_ActiveDates", "ActiveDateID");
+                            $("[name='ActiveDateID']").val(activeDate_id);
+                        } else {
+                            $(this).removeClass("dtactive");
+                            $("[name='ActiveDateID']").val(0);
+                            $("#form_activedate").trigger("reset");
+                        }
+                    }
+                });
+            }
+
+            function SetAsActive() {
+                if ($("[name='ActiveDateID']").val() != 0) {
+                    $.ajax({
+                        url: "../FileMaintenance/SetAsActive?ActiveDateID= " + $("[name='ActiveDateID']").val(),
+                        type: "POST",
+                        success: function (res) {
+                            if (res.success) {
+                                LoadActiveDates();
+                            }
+                        }
+                    });
+                }
+                else {
+                    Swal.fire('Information!', 'Please select a record first.', 'info');
+                }
+            }
+
+            function RemoveActiveDate() {
+                if ($("[name='ActiveDateID']").val() != 0) {
+                    Swal.fire({
+                        text: "Are you sure you want to delete this record?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#28a745',
+                        cancelButtonColor: '#dc3545',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: '../FileMaintenance/RemoveActiveDate?&ActiveDateID=' + $("[name='ActiveDateID']").val(),
+                                type: 'POST',
+                                success: function (res) {
+                                    if (res.success == true) {
+                                        Swal.fire('Success!', 'Record has been deleted.', 'success');
+                                        LoadActiveDates();
+                                        $("[name='ActiveDateID']").val(0);
+                                    } else {
+                                        Swal.fire('Error!', res.msg, 'error');
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+                else {
+                    Swal.fire('Information!', 'Please select a record first.', 'info');
+                }
+            }
+
+            $("#btn_generate_dates").click(function (e) {
+                e.preventDefault();
+                SaveActiveDates();
+            });
+
+            $("#btn_set_date").click(function (e) {
+                e.preventDefault();
+                SetNewActiveDates();
+            });
+
+            function SetNewActiveDates() {
+                $("#form_activedate").trigger("reset");
+                $("#modal_add_active_date").modal("show");
+            }
+
+            function SaveActiveDates() {
+                if (ValidateForm("#form_activedate") == true) {
+                    $.ajax({
+                        url: "../FileMaintenance/SaveActiveDates",
+                        type: 'POST',
+                        data: ActiveDateDetails(),
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (res) {
+                            if (res.success == true) {
+                                Swal.fire({
+                                    text: "Successfully saved.",
+                                    icon: "success",
+                                    showCancelButton: false,
+                                    confirmButtonColor: '#28a745',
+                                    confirmButtonText: "Ok"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        $("#form_activedate").trigger("reset");
+                                        LoadActiveDates();
+                                        $("[name='ActiveDateID']").val(0);
+                                    }
+                                });
+                            } else {
+                                Swal.fire("Warning!", res.message, "warning");
+                            }
+                        }
+                    });
+                } else {
+                    Swal.fire("Warning!", "Please fill-in the required fields.", "warning");
+                }
+            }
+
+            function ActiveDateDetails() {
+                var formData = new FormData();
+                formData.append('ActiveDateID', $("[name='ActiveDateID']").val());
+                formData.append('StartDate', $("[name='StartDate']").val());
+                return formData;
+            }
+
+        });
+
+        ActiveMenu("#activedate");
+    </script>
+}
+

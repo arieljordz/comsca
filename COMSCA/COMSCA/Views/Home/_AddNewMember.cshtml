@@ -1,0 +1,57 @@
+﻿@model COMSCA.Models.tbl_member
+<!-- Modal -->
+<div id="modal_add_member" class="modal fade" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-md pt-5">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><i class="fa fa-user pr-2"></i>Add New Member</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            @*<form id="form_member" enctype="multipart/form-data" novalidate="novalidate" class="form-horizontal">*@
+            <form id="form_member" novalidate="novalidate">
+
+                <div class="modal-body">
+                    @Html.HiddenFor(x => x.MemberID)
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="form-group">
+                                <div for="FirstName">First Name</div>
+                                <input type="text" name="FirstName" class="form-control" id="FirstName" placeholder="First Name" required="required">
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="form-group">
+                                <div for="LastName">Last Name</div>
+                                <input type="text" name="LastName" class="form-control" id="LastName" placeholder="Last Name" required="required">
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div>Gender</div>
+                            <div class="form-group">
+                                @Html.DropDownList("GenderID", ViewData["cmbgender"] as SelectList, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.GenderID)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <div for="Address">Complete Address</div>
+                                <input type="text" name="Address" class="form-control" id="Address" placeholder="Complete Address" required="required">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    @*<button type="button" class="btn btn-success float-right" data-dismiss="modal" id="btn_save_member"><i class="fa fa-user pr-2"></i>Add</button>*@
+                    <button type="submit" class="btn btn-success float-right"><i class="fa fa-user pr-2"></i>Add</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

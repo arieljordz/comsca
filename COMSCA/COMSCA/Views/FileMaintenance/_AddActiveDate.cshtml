@@ -1,0 +1,32 @@
+﻿@model COMSCA.Models.tbl_activeDate
+<!-- Modal -->
+<div id="modal_add_active_date" class="modal fade" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-sm pt-5">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><i class="fa fa-calendar-check pr-2"></i>Set Active Date</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <form id="form_activedate" enctype="multipart/form-data" novalidate class="form-horizontal">
+
+                <div class="modal-body">
+                    @Html.HiddenFor(x => x.ActiveDateID)
+                     <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <div for="StartDate">Start Date</div>
+                                <input type="date" name="StartDate" class="form-control" id="StartDate" required="required">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success float-right" data-dismiss="modal" id="btn_generate_dates"><i class="fa fa-undo pr-2"></i>Generate</button>
+            </div>
+        </div>
+
+    </div>
+</div>

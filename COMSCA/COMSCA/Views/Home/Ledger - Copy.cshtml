@@ -1,0 +1,567 @@
+﻿@{
+    ViewData["Title"] = "Ledger";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" style="padding-top: 60px;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Ledger</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Ledger</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fa fa-money pr-2"></i>Ledger</h3>
+                </div>
+
+                <div class="card-body">
+                    <div class="row pb-3 pt-3">
+                        <div class="col-md-12">
+                            <div class="dataTables_wrapper table-responsive dt-bootstrap4">
+                                <table id="tbl_Ledger" class="table table-bordered table-hover text-center" style="width:100%"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+
+                </div>
+            </div>
+        </div><!--/. container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@*<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>*@
+<!-- /.content-wrapper -->
+@section Scripts
+{
+    <script>
+
+        $(document).ready(function () {
+            var member_id = 0;
+
+            LoadLedger();
+            function LoadLedger() {
+                $('#tbl_Ledger').DataTable({
+                    //scrollY: "300px",
+                    scrollX: true,
+                    scrollCollapse: true,
+                    paging: true,
+                    info: true,
+                    searching: true,
+                    fixedColumns: {
+                        left: 1,
+                        right: 1
+                    },
+                    ajax: {
+                        "url": "../Collection/LoadLedger",
+                        "type": "POST",
+                        "datatype": "JSON",
+                        //"success": function (data) {
+                        //    alert(JSON.stringify(data.data));
+                        //}
+                    },
+                    columns:
+                        [
+                            { data: "MemberID", visible: false, "orderable": false },
+                            { data: "FullName", title: "FullName", sClass: "dt-body-center", orderable: true },
+                            {
+                                data: "Week1", title: "Week1", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week2", title: "Week2", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week3", title: "Week3", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week4", title: "Week4", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week5", title: "Week5", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week6", title: "Week6", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week7", title: "Week7", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week8", title: "Week8", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week9", title: "Week9", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week10", title: "Week10", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week11", title: "Week11", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week12", title: "Week12", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week13", title: "Week13", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week14", title: "Week14", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week15", title: "Week15", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week16", title: "Week16", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week17", title: "Week17", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week18", title: "Week18", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week19", title: "Week19", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week20", title: "Week20", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week21", title: "Week21", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        //return '<div class='icheck-success d-inline'><input type='checkbox' disabled='true' checked='checked'></div>'
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week22", title: "Week22", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week23", title: "Week23", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week24", title: "Week24", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week25", title: "Week25", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week26", title: "Week26", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week27", title: "Week27", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week28", title: "Week28", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week29", title: "Week29", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week30", title: "Week30", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week31", title: "Week31", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week32", title: "Week32", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week33", title: "Week33", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week34", title: "Week34", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week35", title: "Week35", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week36", title: "Week36", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week37", title: "Week37", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week38", title: "Week38", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week39", title: "Week39", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week40", title: "Week40", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week41", title: "Week41", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week42", title: "Week42", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week43", title: "Week43", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week44", title: "Week44", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week45", title: "Week45", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week46", title: "Week46", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week47", title: "Week47", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week48", title: "Week48", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week49", title: "Week49", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week50", title: "Week50", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Week51", title: "Week51", sClass: "dt-body-center", orderable: false, render: function (data) {
+                                    if (data) {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                    } else {
+                                        return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                    }
+                                }
+                            },
+                            {
+                                data: "Total", title: "Total", sClass: "dt-body-center", orderable: false, render: $.fn.dataTable.render.number(',', '.', 2, '₱ ') },
+                         
+                        ]
+                });
+
+                $('#tbl_Ledger tbody').off().on('click', 'tr', function (e) {
+                    if (!$(this).hasClass("dtactive")) {
+                        $(this).parent().find("tr").removeClass("dtactive");
+                        $(this).addClass("dtactive");
+                        member_id = SelectedValue("tbl_Ledger", "MemberID");
+                        $("[name='MemberID']").val(member_id);
+                    } else {
+                        $(this).removeClass("dtactive");
+                        $("[name='MemberID']").val(0);
+                    }
+                });
+            }
+        });
+
+        ActiveMenu("#ledger");
+    </script>
+}
+

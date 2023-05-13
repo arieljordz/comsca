@@ -1,0 +1,140 @@
+﻿@{
+    ViewData["Title"] = "Ledger";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" style="padding-top: 60px;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Ledger</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Ledger</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fa fa-money pr-2"></i>Ledger</h3>
+                </div>
+
+                <div class="card-body">
+                    <div class="row pb-3 pt-3">
+                        <div class="col-md-12">
+                            <div class="dataTables_wrapper table-responsive dt-bootstrap4">
+                                <table id="tbl_Ledger" class="table table-bordered table-hover text-center" style="width:100%"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+
+                </div>
+            </div>
+        </div><!--/. container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@*<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>*@
+<!-- /.content-wrapper -->
+@section Scripts
+{
+    <script>
+
+        $(document).ready(function () {
+            var member_id = 0;
+
+            LoadLedger();
+            function LoadLedger() {
+                $.ajax({
+                    url: "../Collection/LoadLedger",
+                    type: 'GET',
+                    datatype: "JSON",
+                    success: function (res) {
+                        //console.log(res.data);
+                        var dataSet = res.data;
+                        var columns = []
+                        $.each(dataSet[0], function (key, value) {
+                            var my_item = {};
+                            my_item.data = key;
+                            my_item.title = key;
+                            columns.push(my_item);
+                        });
+                        LoadLedgerTable(columns, dataSet);
+                    },
+                });
+            }
+
+            function LoadLedgerTable(columns, dataSet) {
+                console.log(columns);
+                //console.log(columns.length);
+                var len = columns.length - 1;
+                //console.log(len);
+                var index = []
+                for (var i = 0; i < columns.length; i++) {
+                    if (i != 0 && i != len) {
+                        index.push(i);
+                    }
+                }
+                //console.log(index);
+
+                $('#tbl_Ledger').DataTable({
+                    //scrollY: "300px",
+                    scrollX: true,
+                    scrollCollapse: true,
+                    paging: true,
+                    info: true,
+                    searching: true,
+                    fixedColumns: {
+                        left: 1,
+                        right: 1
+                    },
+                    data: dataSet,
+                    columnDefs: [{
+                        'targets': index,
+                        'searchable': false,
+                        'orderable': false,
+                        'className': 'dt-body-center',
+                        'render': function (data, type, full, meta) {
+                            if (data) {
+                                return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                            } else {
+                                return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                            }
+                        }
+                    }],
+                    columns: columns,
+                });
+
+                $('#tbl_Ledger tbody').off().on('click', 'tr', function (e) {
+                    if (!$(this).hasClass("dtactive")) {
+                        $(this).parent().find("tr").removeClass("dtactive");
+                        $(this).addClass("dtactive");
+                        member_id = SelectedValue("tbl_Ledger", "MemberID");
+                        $("[name='MemberID']").val(member_id);
+                    } else {
+                        $(this).removeClass("dtactive");
+                        $("[name='MemberID']").val(0);
+                    }
+                });
+            }
+
+        });
+
+        ActiveMenu("#ledger");
+
+ </script>
+}
+

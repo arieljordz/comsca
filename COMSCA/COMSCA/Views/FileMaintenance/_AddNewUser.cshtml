@@ -1,0 +1,53 @@
+﻿@model COMSCA.Models.tbl_userAccounts
+<!-- Modal -->
+<div id="modal_add_user" class="modal fade" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-md pt-5">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><i class="fa fa-user pr-2"></i>Add New User</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <form id="form_user" enctype="multipart/form-data" novalidate class="form-horizontal">
+
+                <div class="modal-body">
+                    @Html.HiddenFor(x => x.UserID)
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <div for="FirstName">First Name</div>
+                                <input type="text" name="FirstName" class="form-control" id="FirstName" autocomplete="off" required="required">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <div for="LastName">Last Name</div>
+                                <input type="text" name="LastName" class="form-control" id="LastName" autocomplete="off" required="required">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <div for="Username">Username</div>
+                                <input type="text" name="Username" class="form-control" id="Username" autocomplete="off" required="required">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <div for="Password">Password</div>
+                                <input type="password" name="Password" class="form-control" id="Password" autocomplete="off" required="required">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success float-right" data-dismiss="modal" id="btn_save_user"><i class="fa fa-plus pr-2"></i>Add</button>
+            </div>
+        </div>
+
+    </div>
+</div>
