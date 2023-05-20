@@ -128,16 +128,20 @@ namespace COMSCA.Repository
         {
             List<ActiveDateDTO> date_list = new List<ActiveDateDTO>();
 
-            int WeekNumber = db.tbl_activeDate.Where(x => x.IsActive == true).SingleOrDefault().WeekNumber;
-            var qry = db.tbl_activeDate.Where(x => x.WeekNumber >= WeekNumber).ToList();
-            foreach (var item in qry)
+            var chk = db.tbl_activeDate.Where(x => x.IsActive == true).SingleOrDefault();
+            if (chk != null)
             {
-                var obj = new ActiveDateDTO
+                int WeekNumber = db.tbl_activeDate.Where(x => x.IsActive == true).SingleOrDefault().WeekNumber;
+                var qry = db.tbl_activeDate.Where(x => x.WeekNumber >= WeekNumber).ToList();
+                foreach (var item in qry)
                 {
-                    ActiveDateID = item.ActiveDateID,
-                    ActiveDate = item.ActiveDate.ToLongDateString(),
-                };
-                date_list.Add(obj);
+                    var obj = new ActiveDateDTO
+                    {
+                        ActiveDateID = item.ActiveDateID,
+                        ActiveDate = item.ActiveDate.ToLongDateString(),
+                    };
+                    date_list.Add(obj);
+                }
             }
             return date_list;
         }

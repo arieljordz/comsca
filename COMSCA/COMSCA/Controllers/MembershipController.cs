@@ -32,25 +32,34 @@ namespace COMSCA.Controllers
         {
             try
             {
-                if (member.MemberID != 0)
+                var chk = db.tbl_activeDate.Where(x => x.IsActive == true).SingleOrDefault();
+                if (chk != null)
                 {
-                    var qry = db.tbl_member.Where(x => x.MemberID == member.MemberID).SingleOrDefault();
-                    qry.FirstName = member.FirstName;
-                    qry.LastName = member.LastName;
-                    qry.FullName = member.FirstName + " " + member.LastName;
-                    qry.Address = member.Address;
-                    db.SaveChanges();
+                    if (member.MemberID != 0)
+                    {
+                        var qry = db.tbl_member.Where(x => x.MemberID == member.MemberID).SingleOrDefault();
+                        qry.FirstName = member.FirstName;
+                        qry.LastName = member.LastName;
+                        qry.FullName = member.FirstName + " " + member.LastName;
+                        qry.Address = member.Address;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        member.DateRegistered = DateTime.Now;
+                        member.FullName = member.FirstName + " " + member.LastName;
+                        db.tbl_member.Add(member);
+                        db.SaveChanges();
+
+                        SaveCollectionDtls(member.MemberID);
+                    }
+                    return Json(new { success = true });
                 }
                 else
                 {
-                    member.DateRegistered = DateTime.Now;
-                    member.FullName = member.FirstName + " " + member.LastName;
-                    db.tbl_member.Add(member);
-                    db.SaveChanges();
-
-                    SaveCollectionDtls(member.MemberID);
+                    return Json(new { success = false, message = "Set the active date first." });
                 }
-                return Json(new { success = true });
+        
             }
             catch (Exception ex)
             {

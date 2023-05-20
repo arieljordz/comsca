@@ -131,4 +131,13 @@ namespace COMSCA.DTO
         public string ActiveDateIDs { get; set; }
         public string[] arr_DateIDs { get; set; }
     }
+
+
+    public class MemberLedgerDTO
+    {
+        public string FullName { get; set; }
+        public string WeekNumber { get; set; }
+        public bool IsPaid { get; set; }
+        public string TotalAmount{ get; set; }
+    }
 }
