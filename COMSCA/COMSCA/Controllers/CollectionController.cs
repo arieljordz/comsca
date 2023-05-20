@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
 
 namespace COMSCA.Controllers
@@ -140,96 +142,97 @@ namespace COMSCA.Controllers
                           });
 
             List<LedgersDTO> data = new List<LedgersDTO>();
+            //dynamic myObject = new System.Dynamic.ExpandoObject();
+            //List<dynamic> data = new List<dynamic>();
             int count = 1;
 
-                foreach (var item in query2)
+            foreach (var item in query2)
+            {
+                //string[] arr_DateIDs = item.ActiveDateIDs.Split(new char[] { ',' });
+                var collectionDtls = (from a in db.tbl_collectionDtls join b in db.tbl_activeDate on a.ActiveDateID equals b.ActiveDateID where a.MemberID == item.MemberID select new { a, b }).ToList();
+                var TotalAmount = global.MoneyFormat(db.tbl_collectionDtls.Where(x => x.MemberID == item.MemberID).Sum(x => x.AmountofWeek));
+
+                //List<MemberLedgerDTO> _ledger = new List<MemberLedgerDTO>();
+                //var dates = db.tbl_activeDate.ToList();
+                //foreach (var _date in dates)
+                //{
+                //    MemberLedgerDTO ledger = new MemberLedgerDTO();
+                //    ledger.FullName = item.FullName;
+                //    ledger.WeekNumber = "Week " + _date.WeekNumber;
+                //    ledger.IsPaid = collectionDtls.Where(x => x.b.WeekNumber == _date.WeekNumber).SingleOrDefault().a.IsPaid;
+                //    ledger.Amount = collectionDtls.Where(x => x.b.WeekNumber == _date.WeekNumber).SingleOrDefault().a.TotalAmountPaid;
+                //    ledger.TotalAmount = "₱ " + TotalAmount;
+                //    _ledger.Add(ledger);
+                //}
+
+                //dynamic obj = new System.Dynamic.ExpandoObject();
+                //myObject.Name = "John1";
+                //myObject.Name = "John2";
+                //myObject.Name = "John3";
+                //myObject.Name = "John4";
+                //data.Add(obj);
+                //count++;
+
+                var obj = new LedgersDTO
                 {
-                    //string[] arr_DateIDs = item.ActiveDateIDs.Split(new char[] { ',' });
-                    var collectionDtls = (from a in db.tbl_collectionDtls join b in db.tbl_activeDate on a.ActiveDateID equals b.ActiveDateID where a.MemberID == item.MemberID select new { a, b }).ToList();
-                    var TotalAmount = global.MoneyFormat(db.tbl_collectionDtls.Where(x => x.MemberID == item.MemberID).Sum(x => x.AmountofWeek));
-
-                    //var dates = db.tbl_activeDate.Select(x => x.WeekNumber).ToList();
-
-                    var dates = db.tbl_activeDate.ToList();
-
-                    List<MemberLedgerDTO> _ledger = new List<MemberLedgerDTO>(); 
-
-                    foreach (var _date in dates)
-                    {
-                        MemberLedgerDTO ledger = new MemberLedgerDTO();
-                        ledger.WeekNumber = "Week " + _date.WeekNumber;
-                        ledger.IsPaid = collectionDtls.Where(x => x.b.WeekNumber == _date.WeekNumber).SingleOrDefault().a.IsPaid;
-                        _ledger.Add(ledger);
-                    }
-
-                    var obj = new LedgersDTO
-                    {
-                        //LedgerID = count,
-                        //MemberID = item.MemberID,
-                        //TotalString = Convert.ToDecimal(TotalAmount).ToString("N2"),
-                        //WeekDate = collectionDtls.Where(x => x.a.MemberID == item.MemberID).Select(x => x.b.ActiveDate.ToShortDateString()).ToList(),
-
-                        FullName = item.FullName,
-                        Week1 = collectionDtls.Where(x => x.b.WeekNumber == 1).SingleOrDefault().a.IsPaid,
-                        Week2 = collectionDtls.Where(x => x.b.WeekNumber == 2).SingleOrDefault().a.IsPaid,
-                        Week3 = collectionDtls.Where(x => x.b.WeekNumber == 3).SingleOrDefault().a.IsPaid,
-                        Week4 = collectionDtls.Where(x => x.b.WeekNumber == 4).SingleOrDefault().a.IsPaid,
-                        Week5 = collectionDtls.Where(x => x.b.WeekNumber == 5).SingleOrDefault().a.IsPaid,
-                        Week6 = collectionDtls.Where(x => x.b.WeekNumber == 6).SingleOrDefault().a.IsPaid,
-                        Week7 = collectionDtls.Where(x => x.b.WeekNumber == 7).SingleOrDefault().a.IsPaid,
-                        Week8 = collectionDtls.Where(x => x.b.WeekNumber == 8).SingleOrDefault().a.IsPaid,
-                        Week9 = collectionDtls.Where(x => x.b.WeekNumber == 9).SingleOrDefault().a.IsPaid,
-                        Week10 = collectionDtls.Where(x => x.b.WeekNumber == 10).SingleOrDefault().a.IsPaid,
-                        Week11 = collectionDtls.Where(x => x.b.WeekNumber == 11).SingleOrDefault().a.IsPaid,
-                        Week12 = collectionDtls.Where(x => x.b.WeekNumber == 12).SingleOrDefault().a.IsPaid,
-                        Week13 = collectionDtls.Where(x => x.b.WeekNumber == 13).SingleOrDefault().a.IsPaid,
-                        Week14 = collectionDtls.Where(x => x.b.WeekNumber == 14).SingleOrDefault().a.IsPaid,
-                        Week15 = collectionDtls.Where(x => x.b.WeekNumber == 15).SingleOrDefault().a.IsPaid,
-                        Week16 = collectionDtls.Where(x => x.b.WeekNumber == 16).SingleOrDefault().a.IsPaid,
-                        Week17 = collectionDtls.Where(x => x.b.WeekNumber == 17).SingleOrDefault().a.IsPaid,
-                        Week18 = collectionDtls.Where(x => x.b.WeekNumber == 18).SingleOrDefault().a.IsPaid,
-                        Week19 = collectionDtls.Where(x => x.b.WeekNumber == 19).SingleOrDefault().a.IsPaid,
-                        Week20 = collectionDtls.Where(x => x.b.WeekNumber == 20).SingleOrDefault().a.IsPaid,
-                        //Week21 = collectionDtls.Where(x => x.b.WeekNumber == 21).SingleOrDefault().a.IsPaid,
-                        //Week22 = collectionDtls.Where(x => x.b.WeekNumber == 22).SingleOrDefault().a.IsPaid,
-                        //Week23 = collectionDtls.Where(x => x.b.WeekNumber == 23).SingleOrDefault().a.IsPaid,
-                        //Week24 = collectionDtls.Where(x => x.b.WeekNumber == 24).SingleOrDefault().a.IsPaid,
-                        //Week25 = collectionDtls.Where(x => x.b.WeekNumber == 25).SingleOrDefault().a.IsPaid,
-                        //Week26 = collectionDtls.Where(x => x.b.WeekNumber == 26).SingleOrDefault().a.IsPaid,
-                        //Week27 = collectionDtls.Where(x => x.b.WeekNumber == 27).SingleOrDefault().a.IsPaid,
-                        //Week28 = collectionDtls.Where(x => x.b.WeekNumber == 28).SingleOrDefault().a.IsPaid,
-                        //Week29 = collectionDtls.Where(x => x.b.WeekNumber == 29).SingleOrDefault().a.IsPaid,
-                        //Week30 = collectionDtls.Where(x => x.b.WeekNumber == 30).SingleOrDefault().a.IsPaid,
-                        //Week31 = collectionDtls.Where(x => x.b.WeekNumber == 31).SingleOrDefault().a.IsPaid,
-                        //Week32 = collectionDtls.Where(x => x.b.WeekNumber == 32).SingleOrDefault().a.IsPaid,
-                        //Week33 = collectionDtls.Where(x => x.b.WeekNumber == 33).SingleOrDefault().a.IsPaid,
-                        //Week34 = collectionDtls.Where(x => x.b.WeekNumber == 34).SingleOrDefault().a.IsPaid,
-                        //Week35 = collectionDtls.Where(x => x.b.WeekNumber == 35).SingleOrDefault().a.IsPaid,
-                        //Week36 = collectionDtls.Where(x => x.b.WeekNumber == 36).SingleOrDefault().a.IsPaid,
-                        //Week37 = collectionDtls.Where(x => x.b.WeekNumber == 37).SingleOrDefault().a.IsPaid,
-                        //Week38 = collectionDtls.Where(x => x.b.WeekNumber == 38).SingleOrDefault().a.IsPaid,
-                        //Week39 = collectionDtls.Where(x => x.b.WeekNumber == 39).SingleOrDefault().a.IsPaid,
-                        //Week40 = collectionDtls.Where(x => x.b.WeekNumber == 40).SingleOrDefault().a.IsPaid,
-                        //Week41 = collectionDtls.Where(x => x.b.WeekNumber == 41).SingleOrDefault().a.IsPaid,
-                        //Week42 = collectionDtls.Where(x => x.b.WeekNumber == 42).SingleOrDefault().a.IsPaid,
-                        //Week43 = collectionDtls.Where(x => x.b.WeekNumber == 43).SingleOrDefault().a.IsPaid,
-                        //Week44 = collectionDtls.Where(x => x.b.WeekNumber == 44).SingleOrDefault().a.IsPaid,
-                        //Week45 = collectionDtls.Where(x => x.b.WeekNumber == 45).SingleOrDefault().a.IsPaid,
-                        //Week46 = collectionDtls.Where(x => x.b.WeekNumber == 46).SingleOrDefault().a.IsPaid,
-                        //Week47 = collectionDtls.Where(x => x.b.WeekNumber == 47).SingleOrDefault().a.IsPaid,
-                        //Week48 = collectionDtls.Where(x => x.b.WeekNumber == 48).SingleOrDefault().a.IsPaid,
-                        //Week49 = collectionDtls.Where(x => x.b.WeekNumber == 49).SingleOrDefault().a.IsPaid,
-                        //Week50 = collectionDtls.Where(x => x.b.WeekNumber == 50).SingleOrDefault().a.IsPaid,
-                        //Week51 = collectionDtls.Where(x => x.b.WeekNumber == 51).SingleOrDefault().a.IsPaid,
-                        Total = "₱ " + TotalAmount,
-                    };
-                    data.Add(obj);
-                    count++;
-                }
-                return Json(new
-                {
-                    data = data
-                });
+                    Full_Name = item.FullName,
+                    Week_1 = collectionDtls.Where(x => x.b.WeekNumber == 1).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 1).SingleOrDefault().a.IsPaid,
+                    Week_2 = collectionDtls.Where(x => x.b.WeekNumber == 2).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 2).SingleOrDefault().a.IsPaid,
+                    Week_3 = collectionDtls.Where(x => x.b.WeekNumber == 3).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 3).SingleOrDefault().a.IsPaid,
+                    Week_4 = collectionDtls.Where(x => x.b.WeekNumber == 4).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 4).SingleOrDefault().a.IsPaid,
+                    Week_5 = collectionDtls.Where(x => x.b.WeekNumber == 5).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 5).SingleOrDefault().a.IsPaid,
+                    Week_6 = collectionDtls.Where(x => x.b.WeekNumber == 6).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 6).SingleOrDefault().a.IsPaid,
+                    Week_7 = collectionDtls.Where(x => x.b.WeekNumber == 7).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 7).SingleOrDefault().a.IsPaid,
+                    Week_8 = collectionDtls.Where(x => x.b.WeekNumber == 8).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 8).SingleOrDefault().a.IsPaid,
+                    Week_9 = collectionDtls.Where(x => x.b.WeekNumber == 9).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 9).SingleOrDefault().a.IsPaid,
+                    Week_10 = collectionDtls.Where(x => x.b.WeekNumber == 10).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 10).SingleOrDefault().a.IsPaid,
+                    Week_11 = collectionDtls.Where(x => x.b.WeekNumber == 11).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 11).SingleOrDefault().a.IsPaid,
+                    Week_12 = collectionDtls.Where(x => x.b.WeekNumber == 12).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 12).SingleOrDefault().a.IsPaid,
+                    Week_13 = collectionDtls.Where(x => x.b.WeekNumber == 13).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 13).SingleOrDefault().a.IsPaid,
+                    Week_14 = collectionDtls.Where(x => x.b.WeekNumber == 14).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 14).SingleOrDefault().a.IsPaid,
+                    Week_15 = collectionDtls.Where(x => x.b.WeekNumber == 15).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 15).SingleOrDefault().a.IsPaid,
+                    Week_16 = collectionDtls.Where(x => x.b.WeekNumber == 16).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 16).SingleOrDefault().a.IsPaid,
+                    Week_17 = collectionDtls.Where(x => x.b.WeekNumber == 17).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 17).SingleOrDefault().a.IsPaid,
+                    Week_18 = collectionDtls.Where(x => x.b.WeekNumber == 18).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 18).SingleOrDefault().a.IsPaid,
+                    Week_19 = collectionDtls.Where(x => x.b.WeekNumber == 19).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 19).SingleOrDefault().a.IsPaid,
+                    Week_20 = collectionDtls.Where(x => x.b.WeekNumber == 20).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 20).SingleOrDefault().a.IsPaid,
+                    Week_21 = collectionDtls.Where(x => x.b.WeekNumber == 21).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 21).SingleOrDefault().a.IsPaid,
+                    Week_22 = collectionDtls.Where(x => x.b.WeekNumber == 22).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 22).SingleOrDefault().a.IsPaid,
+                    Week_23 = collectionDtls.Where(x => x.b.WeekNumber == 23).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 23).SingleOrDefault().a.IsPaid,
+                    Week_24 = collectionDtls.Where(x => x.b.WeekNumber == 24).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 24).SingleOrDefault().a.IsPaid,
+                    Week_25 = collectionDtls.Where(x => x.b.WeekNumber == 25).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 25).SingleOrDefault().a.IsPaid,
+                    Week_26 = collectionDtls.Where(x => x.b.WeekNumber == 26).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 26).SingleOrDefault().a.IsPaid,
+                    Week_27 = collectionDtls.Where(x => x.b.WeekNumber == 27).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 27).SingleOrDefault().a.IsPaid,
+                    Week_28 = collectionDtls.Where(x => x.b.WeekNumber == 28).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 28).SingleOrDefault().a.IsPaid,
+                    Week_29 = collectionDtls.Where(x => x.b.WeekNumber == 29).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 29).SingleOrDefault().a.IsPaid,
+                    Week_30 = collectionDtls.Where(x => x.b.WeekNumber == 30).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 30).SingleOrDefault().a.IsPaid,
+                    Week_31 = collectionDtls.Where(x => x.b.WeekNumber == 31).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 31).SingleOrDefault().a.IsPaid,
+                    Week_32 = collectionDtls.Where(x => x.b.WeekNumber == 32).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 32).SingleOrDefault().a.IsPaid,
+                    Week_33 = collectionDtls.Where(x => x.b.WeekNumber == 33).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 33).SingleOrDefault().a.IsPaid,
+                    Week_34 = collectionDtls.Where(x => x.b.WeekNumber == 34).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 34).SingleOrDefault().a.IsPaid,
+                    Week_35 = collectionDtls.Where(x => x.b.WeekNumber == 35).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 35).SingleOrDefault().a.IsPaid,
+                    Week_36 = collectionDtls.Where(x => x.b.WeekNumber == 36).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 36).SingleOrDefault().a.IsPaid,
+                    Week_37 = collectionDtls.Where(x => x.b.WeekNumber == 37).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 37).SingleOrDefault().a.IsPaid,
+                    Week_38 = collectionDtls.Where(x => x.b.WeekNumber == 38).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 38).SingleOrDefault().a.IsPaid,
+                    Week_39 = collectionDtls.Where(x => x.b.WeekNumber == 39).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 39).SingleOrDefault().a.IsPaid,
+                    Week_40 = collectionDtls.Where(x => x.b.WeekNumber == 40).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 40).SingleOrDefault().a.IsPaid,
+                    Week_41 = collectionDtls.Where(x => x.b.WeekNumber == 41).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 41).SingleOrDefault().a.IsPaid,
+                    Week_42 = collectionDtls.Where(x => x.b.WeekNumber == 42).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 42).SingleOrDefault().a.IsPaid,
+                    Week_43 = collectionDtls.Where(x => x.b.WeekNumber == 43).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 43).SingleOrDefault().a.IsPaid,
+                    Week_44 = collectionDtls.Where(x => x.b.WeekNumber == 44).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 44).SingleOrDefault().a.IsPaid,
+                    Week_45 = collectionDtls.Where(x => x.b.WeekNumber == 45).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 45).SingleOrDefault().a.IsPaid,
+                    Week_46 = collectionDtls.Where(x => x.b.WeekNumber == 46).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 46).SingleOrDefault().a.IsPaid,
+                    Week_47 = collectionDtls.Where(x => x.b.WeekNumber == 47).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 47).SingleOrDefault().a.IsPaid,
+                    Week_48 = collectionDtls.Where(x => x.b.WeekNumber == 48).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 48).SingleOrDefault().a.IsPaid,
+                    Week_49 = collectionDtls.Where(x => x.b.WeekNumber == 49).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 49).SingleOrDefault().a.IsPaid,
+                    Week_50 = collectionDtls.Where(x => x.b.WeekNumber == 50).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 50).SingleOrDefault().a.IsPaid,
+                    Week_51 = collectionDtls.Where(x => x.b.WeekNumber == 51).SingleOrDefault() == null ? false : collectionDtls.Where(x => x.b.WeekNumber == 51).SingleOrDefault().a.IsPaid,
+                    Total = "₱ " + TotalAmount,
+                };
+                data.Add(obj);
+                count++;
+            }
+            return Json(new { data = data });
         }
 
         public IActionResult GetCurrentLoan(int MemberID)

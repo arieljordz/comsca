@@ -128,3 +128,13 @@ table.DTFC_Cloned tr {
 .div-iframe-height {
     height: 500px !important;
 }
+
+.text-blink {
+    animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
