@@ -27,6 +27,7 @@ namespace COMSCA.Controllers
         public IActionResult LoadViews()
         {
             ViewBag.Username = db.tbl_userAccounts.FirstOrDefault().FullName;
+            ViewBag.DateNow = DateTime.Now;
             var gender = db.tbl_gender.OrderBy(x => x.GenderID);
             ViewBag.cmbgender = new SelectList(gender, "GenderID", "Description");
             ViewBag.CurrentCollection = global.MoneyFormat(global.GetCurrentCollection());

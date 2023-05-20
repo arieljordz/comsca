@@ -63,7 +63,7 @@
                     type: 'GET',
                     datatype: "JSON",
                     success: function (res) {
-                        //console.log(res.data);
+                        console.log(res.data);
                         var dataSet = res.data;
                         var columns = []
                         $.each(dataSet[0], function (key, value) {
@@ -78,7 +78,7 @@
             }
 
             function LoadLedgerTable(columns, dataSet) {
-                console.log(columns);
+                //console.log(columns);
                 //console.log(columns.length);
                 var len = columns.length - 1;
                 //console.log(len);
@@ -109,9 +109,9 @@
                         'className': 'dt-body-center',
                         'render': function (data, type, full, meta) {
                             if (data) {
-                                return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true" checked="checked"><label for="Week1"></label></div>'
+                                return '<div class="icheck-success d-inline"><input type="checkbox" id="week" disabled="true" checked="checked"><label for="week"></label></div>'
                             } else {
-                                return '<div class="icheck-success d-inline"><input type="checkbox" id="Week1" disabled="true"><label for="Week1"></label></div>'
+                                return '<div class="icheck-success d-inline"><input type="checkbox" id="week" disabled="true"><label for="week"></label></div>'
                             }
                         }
                     }],

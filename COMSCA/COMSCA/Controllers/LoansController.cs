@@ -175,14 +175,26 @@ namespace COMSCA.Controllers
                         decimal TotalCollection = global.GetTotalCollection();
                         if (TotalCollection > qry.Amount)
                         {
-                            qry.IsReleased = true;
-                            qry.DateReleased = Convert.ToDateTime(db.tbl_activeDate.Where(x => x.IsActive == true).SingleOrDefault().ActiveDate);
-                            qry.ActiveDateID = db.tbl_activeDate.Where(x => x.IsActive == true).SingleOrDefault().ActiveDateID;
-                            db.SaveChanges();
+                            DateTime dateNow = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                            var chk = db.tbl_loanSchedule.Where(x => x.LoanScheduleID == LoanScheduleID && x.IsReleased != true && x.DateSchedule == dateNow).Any();
 
-                            SaveLoanHdr(LoanScheduleID);
+                            if (chk)
+                            {
+                                qry.IsReleased = true;
+                                qry.DateReleased = Convert.ToDateTime(db.tbl_activeDate.Where(x => x.IsActive == true).SingleOrDefault().ActiveDate);
+                                qry.ActiveDateID = db.tbl_activeDate.Where(x => x.IsActive == true).SingleOrDefault().ActiveDateID;
+                                db.SaveChanges();
 
-                            return Json(new { success = true });
+                                SaveLoanHdr(LoanScheduleID);
+
+                                return Json(new { success = true });
+                            }
+                            else
+                            {
+                                DateTime DateSchedule = new DateTime(qry.DateSchedule.Year, qry.DateSchedule.Month, qry.DateSchedule.Day);
+                                return Json(new { success = false, message = "This loan application should be released on " + DateSchedule.ToString("MMMM dd, yyyy") + "." });
+                            }
+
                         }
                         else
                         {

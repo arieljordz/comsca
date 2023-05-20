@@ -29,12 +29,29 @@ namespace COMSCA.Controllers
 
             if (qry)
             {
+                
+                DateTime dateNow = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                var chk = db.tbl_activeDate.Where(x => x.ActiveDate == dateNow).Any();
+
+                if (chk)
+                {
+                    int ActiveDateID = db.tbl_activeDate.Where(x => x.ActiveDate == dateNow).SingleOrDefault().ActiveDateID;
+
+                    var current = db.tbl_activeDate.Where(x => x.IsActive == true).SingleOrDefault();
+                    current.IsActive = false;
+                    db.SaveChanges();
+
+                    var newly = db.tbl_activeDate.Where(x => x.ActiveDateID == ActiveDateID).SingleOrDefault();
+                    newly.IsActive = true;
+                    db.SaveChanges();
+                }
+
                 //return RedirectToAction("Dashboard", "Home");
                 //return RedirectToAction("Contribution", "Home");
                 //return RedirectToAction("SetActiveDate", "Home");
-                return RedirectToAction("MembershipDetails", "Home");
+                //return RedirectToAction("MembershipDetails", "Home");
                 //return RedirectToAction("Ledger", "Home");
-                //return RedirectToAction("LoanApproval", "Home");
+                return RedirectToAction("LoanApproval", "Home");
                 //return RedirectToAction("LoanDetails", "Home");
                 //return RedirectToAction("Fees", "FileMaintenance");
             }
