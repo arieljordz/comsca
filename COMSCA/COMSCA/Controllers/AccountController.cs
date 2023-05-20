@@ -30,9 +30,9 @@ namespace COMSCA.Controllers
             if (qry)
             {
                 //return RedirectToAction("Dashboard", "Home");
-                return RedirectToAction("Contribution", "Home");
+                //return RedirectToAction("Contribution", "Home");
                 //return RedirectToAction("SetActiveDate", "Home");
-                //return RedirectToAction("MembershipDetails", "Home");
+                return RedirectToAction("MembershipDetails", "Home");
                 //return RedirectToAction("Ledger", "Home");
                 //return RedirectToAction("LoanApproval", "Home");
                 //return RedirectToAction("LoanDetails", "Home");

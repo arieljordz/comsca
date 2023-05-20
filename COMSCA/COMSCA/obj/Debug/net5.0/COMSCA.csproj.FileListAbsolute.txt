@@ -179,7 +179,6 @@ D:\MY PROJECTS\GIT-COMSCA\comsca\COMSCA\COMSCA\bin\Debug\net5.0\runtimes\unix\li
 D:\MY PROJECTS\GIT-COMSCA\comsca\COMSCA\COMSCA\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Private.ServiceModel.dll
 D:\MY PROJECTS\GIT-COMSCA\comsca\COMSCA\COMSCA\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\MY PROJECTS\GIT-COMSCA\comsca\COMSCA\COMSCA\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-D:\MY PROJECTS\GIT-COMSCA\comsca\COMSCA\COMSCA\obj\Debug\net5.0\COMSCA.csproj.AssemblyReference.cache
 D:\MY PROJECTS\GIT-COMSCA\comsca\COMSCA\COMSCA\obj\Debug\net5.0\COMSCA.GeneratedMSBuildEditorConfig.editorconfig
 D:\MY PROJECTS\GIT-COMSCA\comsca\COMSCA\COMSCA\obj\Debug\net5.0\COMSCA.AssemblyInfoInputs.cache
 D:\MY PROJECTS\GIT-COMSCA\comsca\COMSCA\COMSCA\obj\Debug\net5.0\COMSCA.AssemblyInfo.cs
@@ -222,3 +221,4 @@ D:\MY PROJECTS\GIT-COMSCA\comsca\COMSCA\COMSCA\obj\Debug\net5.0\COMSCA.dll
 D:\MY PROJECTS\GIT-COMSCA\comsca\COMSCA\COMSCA\obj\Debug\net5.0\ref\COMSCA.dll
 D:\MY PROJECTS\GIT-COMSCA\comsca\COMSCA\COMSCA\obj\Debug\net5.0\COMSCA.pdb
 D:\MY PROJECTS\GIT-COMSCA\comsca\COMSCA\COMSCA\obj\Debug\net5.0\COMSCA.genruntimeconfig.cache
+D:\MY PROJECTS\GIT-COMSCA\comsca\COMSCA\COMSCA\obj\Debug\net5.0\COMSCA.csproj.AssemblyReference.cache

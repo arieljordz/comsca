@@ -202,37 +202,67 @@
             }
 
             function SaveActiveDates() {
-                if (ValidateForm("#form_activedate") == true) {
-                    $.ajax({
-                        url: "../FileMaintenance/SaveActiveDates",
-                        type: 'POST',
-                        data: ActiveDateDetails(),
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        success: function (res) {
-                            if (res.success == true) {
-                                Swal.fire({
-                                    text: "Successfully saved.",
-                                    icon: "success",
-                                    showCancelButton: false,
-                                    confirmButtonColor: '#28a745',
-                                    confirmButtonText: "Ok"
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        $("#form_activedate").trigger("reset");
-                                        LoadActiveDates();
-                                        $("[name='ActiveDateID']").val(0);
-                                    }
-                                });
-                            } else {
-                                Swal.fire("Warning!", res.message, "warning");
-                            }
+                $.ajax({
+                    url: "../FileMaintenance/SaveActiveDates",
+                    type: 'POST',
+                    data: ActiveDateDetails(),
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (res) {
+                        if (res.success == true) {
+                            Swal.fire({
+                                text: "Successfully saved.",
+                                icon: "success",
+                                showCancelButton: false,
+                                confirmButtonColor: '#28a745',
+                                confirmButtonText: "Ok"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $("#form_activedate").trigger("reset");
+                                    LoadActiveDates();
+                                    $("[name='ActiveDateID']").val(0);
+                                }
+                            });
+                        } else {
+                            Swal.fire("Warning!", res.message, "warning");
                         }
-                    });
-                } else {
-                    Swal.fire("Warning!", "Please fill-in the required fields.", "warning");
-                }
+                    }
+                });
+            }
+
+            ValidateActiveDate();
+            function ValidateActiveDate() {
+                $.validator.setDefaults({
+                    submitHandler: function () {
+                        SaveActiveDates();
+                    }
+                });
+                $('#form_activedate').validate({
+                    rules: {
+                        ActiveDate: {
+                            required: true
+                        },
+                    },
+                    messages: {
+                        ActiveDate: {
+                            required: "This field is required"
+                        },
+                    },
+                    errorElement: 'span',
+                    errorPlacement: function (error, element) {
+                        error.addClass('invalid-feedback');
+                        element.closest('.form-group').append(error);
+                    },
+                    highlight: function (element, errorClass, validClass) {
+                        $(element).addClass('is-invalid');
+                        console.log(element);
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $(element).removeClass('is-invalid');
+                        console.log(element);
+                    }
+                });
             }
 
             function ActiveDateDetails() {

@@ -125,20 +125,18 @@
                     info: true,
                     searching: true,
                     paging: true,
-                    order: [[1, "asc"], [2, "asc"]],
-                    lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]],
+                    //order: [[1, "asc"], [2, "asc"]],
+                    //lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]],
                     ajax: {
                         "url": "../Membership/LoadMembers",
                         "type": "POST",
-                        "datatype": "JSON",
-                        "success": function (data) {
-                            //alert(JSON.stringify(data.data));
-                            console.log(data.data);
-                        }
+                        "datatype": "JSON"
+                        //"success": function (data) {
+                        //    alert(JSON.stringify(data.data));
+                        //}
                     },
                     columns:
                         [
-                            //{ data: "MemberID", visible: false, "orderable": false },
                             { data: "FullName", title: "Full Name", sClass: "dt-body-center", orderable: false },
                             { data: "Address", title: "Address", sClass: "dt-body-center", orderable: false },
                             { data: "Gender", title: "Gender", sClass: "dt-body-center", orderable: false },
@@ -163,6 +161,7 @@
                 });
 
                 $('#tbl_Members tbody').off().on('click', 'tr', function (e) {
+                    e.preventDefault();
                     if ($(e.target).is("[id^=btnUpdate],[id^=btnUpdate] i")) {
                         UpdateMember();
                     }
