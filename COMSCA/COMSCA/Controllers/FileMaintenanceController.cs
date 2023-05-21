@@ -28,18 +28,21 @@ namespace COMSCA.Controllers
         public IActionResult UserAccounts()
         {
             ViewBag.Username = db.tbl_userAccounts.FirstOrDefault().FullName;
+            ViewBag.DateNow = DateTime.Now;
             return View();
         }
 
         public IActionResult SetActiveDate()
         {
             ViewBag.Username = db.tbl_userAccounts.FirstOrDefault().FullName;
+            ViewBag.DateNow = DateTime.Now;
             return View();
         }
 
         public IActionResult Fees()
         {
             ViewBag.Username = db.tbl_userAccounts.FirstOrDefault().FullName;
+            ViewBag.DateNow = DateTime.Now;
             var fees = db.tbl_fee.OrderBy(x => x.FeeID);
             ViewBag.cmbfees = new SelectList(fees, "FeeID", "Description");
 

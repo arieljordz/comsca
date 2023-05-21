@@ -222,3 +222,4 @@ D:\MY PROJECTS\GIT-COMSCA\comsca\COMSCA\COMSCA\obj\Debug\net5.0\ref\COMSCA.dll
 D:\MY PROJECTS\GIT-COMSCA\comsca\COMSCA\COMSCA\obj\Debug\net5.0\COMSCA.pdb
 D:\MY PROJECTS\GIT-COMSCA\comsca\COMSCA\COMSCA\obj\Debug\net5.0\COMSCA.genruntimeconfig.cache
 D:\MY PROJECTS\GIT-COMSCA\comsca\COMSCA\COMSCA\obj\Debug\net5.0\COMSCA.csproj.AssemblyReference.cache
+D:\MY PROJECTS\GIT-COMSCA\comsca\COMSCA\COMSCA\obj\Debug\net5.0\Razor\Views\Home\CollectionDetails.cshtml.g.cs

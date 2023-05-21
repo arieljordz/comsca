@@ -51,7 +51,8 @@ namespace COMSCA.Controllers
                 //return RedirectToAction("SetActiveDate", "Home");
                 //return RedirectToAction("MembershipDetails", "Home");
                 //return RedirectToAction("Ledger", "Home");
-                return RedirectToAction("LoanApproval", "Home");
+                return RedirectToAction("CollectionDetails", "Home");
+                //return RedirectToAction("LoanApproval", "Home");
                 //return RedirectToAction("LoanDetails", "Home");
                 //return RedirectToAction("Fees", "FileMaintenance");
             }

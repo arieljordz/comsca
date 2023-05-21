@@ -1,0 +1,88 @@
+﻿@model COMSCA.Models.tbl_collection
+
+@{
+    ViewData["Title"] = "Contribution";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" style="padding-top: 60px;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Collection Details</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Collection Details</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-edit pr-2"></i>Collection Details</h3>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-3">
+                            <div for="TotalCollection" class="text-primary">Total Collection</div>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text text-primary">₱</span>
+                                </div>
+                                <input type="text" class="form-control text-right text-primary" name="TotalCollection" placeholder="0.00" readonly="readonly" value="@ViewBag.CurrentCollection">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div for="TotalCollection" class="text-primary">Total Interest</div>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text text-primary">₱</span>
+                                </div>
+                                <input type="text" class="form-control text-right text-primary" name="TotalInterest" placeholder="0.00" readonly="readonly" value="@ViewBag.TotalInterest">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div for="AccountReceivable" class="text-warning">Total Loans</div>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text text-warning">₱</span>
+                                </div>
+                                <input type="text" class="form-control text-right text-warning" name="TotalLoans" placeholder="0.00" readonly="readonly" value="@ViewBag.TotalLoans">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+
+                </div>
+            </div>
+        </div><!--/. container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+@section Scripts
+{
+    <script>
+
+        $(document).ready(function () {
+           
+
+        });
+
+        ActiveMenu("#colDtls");
+    </script>
+}
+
