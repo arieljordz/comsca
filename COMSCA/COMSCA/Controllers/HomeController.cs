@@ -32,6 +32,7 @@ namespace COMSCA.Controllers
             ViewBag.cmbgender = new SelectList(gender, "GenderID", "Description");
             ViewBag.CurrentCollection = global.MoneyFormat(global.GetCurrentCollection());
             ViewBag.TotalLoans = global.MoneyFormat(global.GetTotalLoans());
+            ViewBag.TotalInterest = global.MoneyFormat(global.GetTotalInterest());
             ViewBag.ContributionFee = db.tbl_feeDtls.Where(x => x.IsActive == true && x.Description == "Contribution Fee").FirstOrDefault().Amount;
             ViewBag.AbsentFee = db.tbl_feeDtls.Where(x => x.IsActive == true && x.Description == "Absent Fee").FirstOrDefault().Amount;
             ViewBag.ServiceChargeFee = db.tbl_feeDtls.Where(x => x.IsActive == true && x.Description == "Service Charge Fee").FirstOrDefault().Amount;
@@ -59,6 +60,11 @@ namespace COMSCA.Controllers
         }
 
         public IActionResult Ledger()
+        {
+            return LoadViews();
+        }
+        
+        public IActionResult CollectionDetails()
         {
             return LoadViews();
         }
